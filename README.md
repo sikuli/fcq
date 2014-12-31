@@ -1,4 +1,4 @@
-fcq
+CU-Boulder FCQ Data
 ===
 
-For working with CU FCQ dataset
+We will be doing analysis on CU-Boulder's public FCQ dataset.  The data is in .csv format.

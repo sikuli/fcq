@@ -18,6 +18,10 @@ ask questions about instructors (i.e., questions containing the word 'instructor
 
 	node app.js instructor
 
+and you should see this in the terminal
+
+![screen](screen.png)
+
 # Debug
 
 run all questions and see all the debug messages

@@ -1,0 +1,26 @@
+{
+  "name": "diff-ed",
+  "version": "1.0.0",
+  "description": "bigdiff education data",
+  "main": "app.js",
+  "dependencies": {
+    "async": "^0.9.0",
+    "chalk": "^0.5.1",
+    "csv": "^0.4.1",
+    "csv-parser": "^1.5.0",
+    "csv2": "^0.1.1",
+    "lodash": "^2.4.1",
+    "through2": "^0.6.3"
+  },
+  "devDependencies": {
+    "gulp": "^3.8.10",
+    "gulp-notify": "^2.1.0",
+    "gulp-rename": "^1.2.0",
+    "debug": "^2.1.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}

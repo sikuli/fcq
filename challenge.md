@@ -51,7 +51,8 @@ Michael contributes 5 more
 * Purposely limit ourselves to basic technologies to understand their capabilities and limitations
 
 ### Requirements:
-* Solutions should be implemented in pure Javascript (let’s get really good at it).
+* Solutions should be implemented in Javascript (let’s get really good at it).
+* Use any Node.js library you like.
 * If a database is used, only MongoDB is allowed (don’t get too fancy here yet).
 * Output should be in JSON.
 

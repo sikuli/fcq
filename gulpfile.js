@@ -5,7 +5,8 @@ var gulp     = require('gulp'),
     through2 = require('through2'),
     _        = require('lodash'),
     rename   = require('gulp-rename'),
-    process  = require('child_process');
+    process  = require('child_process'),
+    fs       = require('fs');
 
 gulp.task('csv2json', function() {
 
@@ -66,5 +67,57 @@ gulp.task('import', function() {
 
     mongoimport.stderr.on('data', function (data) {
         console.error(data.toString());
+    });
+});
+
+gulp.task('sanitize', function() {
+    var readFile = function(file) {
+        return fs.readFileSync(file, 'utf8');
+    };
+
+    var splitLines = function(data) {
+        var output = data.split("\n");
+        return output.splice(0, output.length - 1);
+    };
+
+    var parseJSON = function(collection) {
+        return _.map(collection, JSON.parse);
+    };
+
+    var sanitizeOutputs = function(collection) {
+        // Check to see if it is a percentage
+        var isMatch = function(val) { return val.search("%") != -1; };
+
+        // Coerce percentage to float
+        var coerceToFloat = function(val) {
+            return val.match(/[0-9]+/) / 100
+        };
+
+        // Coerce when we have a percentage, otherwise do nothing
+        var coerceIfPercentage = function(val) {
+            return isMatch(val) ? coerceToFloat(val) : val;
+        };
+
+        // Map over collection and each object, coercing if percentage
+        return _.map(collection, function(obj) {
+            return _.mapValues(obj, coerceIfPercentage);
+        });
+    };
+
+    // Compostion chain, moves bottom up
+    var inspect = _.compose(
+        sanitizeOutputs,
+        parseJSON,
+        splitLines,
+        readFile
+    );
+
+    // Our filtered data
+    var filtered = JSON.stringify(inspect('data/fcq.json'));
+
+    // Write to file
+    fs.writeFile('data/fcqFiltered.json', filtered, function(err) {
+        if (err) throw err;
+        else console.log('Successfully wrote to file.');
     });
 });

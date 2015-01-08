@@ -5,7 +5,8 @@ We will be doing analysis on CU-Boulder's public FCQ dataset.  The data is in .c
 
 # Setup
 
-	npm install
+1. Install the packages: `npm install`
+2. Import the data: `gulp import`
 
 # Run
 

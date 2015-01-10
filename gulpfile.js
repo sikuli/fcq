@@ -56,7 +56,7 @@ gulp.task('import', function() {
         '-d', database,
         '-c', collection,
         '--file', 'data/fcqFiltered.json'
-    ]
+    ];
 
     var mongoimport = process.spawn('mongoimport', args);
 
@@ -89,7 +89,7 @@ gulp.task('sanitize', function() {
 
         // Coerce percentage to float
         var coerceToFloat = function(val) {
-            return val.match(/[0-9]+/) / 100
+            return val.match(/[0-9]+/) / 100;
         };
 
         // Coerce when we have a percentage, otherwise do nothing
@@ -105,14 +105,14 @@ gulp.task('sanitize', function() {
 
     // Since Mongo is not very friendly with JSON arrays, we newline each entry
     var mongoifyOutputToFile = function(collection) {
-        var outputFile = 'data/fcqFiltered.json'
+        var outputFile = 'data/fcqFiltered.json';
         var appendFile = _.partial(fs.appendFileSync, outputFile);
 
         _.each(collection, function(val) {
             appendFile(JSON.stringify(val) + "\n");
         });
 
-        console.log('Successfully wrote to file.')
+        console.log('Successfully wrote to file.');
 
         return;
     };

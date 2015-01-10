@@ -52,11 +52,10 @@ gulp.task('import', function() {
     var collection = 'fcq';
 
     var args = [
-        '--type', 'csv',
-        '--headerline',
+        '--type', 'json',
         '-d', database,
         '-c', collection,
-        '--file', 'data/fcq.csv'
+        '--file', 'data/fcqFiltered.json'
     ]
 
     var mongoimport = process.spawn('mongoimport', args);
@@ -104,20 +103,29 @@ gulp.task('sanitize', function() {
         });
     };
 
+    // Since Mongo is not very friendly with JSON arrays, we newline each entry
+    var mongoifyOutputToFile = function(collection) {
+        var outputFile = 'data/fcqFiltered.json'
+        var appendFile = _.partial(fs.appendFileSync, outputFile);
+
+        _.each(collection, function(val) {
+            appendFile(JSON.stringify(val) + "\n");
+        });
+
+        console.log('Successfully wrote to file.')
+
+        return;
+    };
+
     // Compostion chain, moves bottom up
-    var inspect = _.compose(
+    var filterData = _.compose(
+        mongoifyOutputToFile,
         sanitizeOutputs,
         parseJSON,
         splitLines,
         readFile
     );
 
-    // Our filtered data
-    var filtered = JSON.stringify(inspect('data/fcq.json'));
-
-    // Write to file
-    fs.writeFile('data/fcqFiltered.json', filtered, function(err) {
-        if (err) throw err;
-        else console.log('Successfully wrote to file.');
-    });
+    // Run the task
+    filterData('data/fcq.json');
 });

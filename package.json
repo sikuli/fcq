@@ -6,6 +6,7 @@
   "dependencies": {
     "async": "^0.9.0",
     "chalk": "^0.5.1",
+    "compute-sum": "^1.0.0",
     "csv": "^0.4.1",
     "csv-parser": "^1.5.0",
     "csv2": "^0.1.1",

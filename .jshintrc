@@ -1,4 +1,7 @@
 {
-    "asi": true,
-    "node": true
+  "asi": true,
+  "node": true,
+  "globals": {
+    "Promise": true
+  }
 }

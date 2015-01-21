@@ -5,6 +5,7 @@
   "main": "app.js",
   "dependencies": {
     "async": "^0.9.0",
+    "bluebird": "^2.8.2",
     "chalk": "^0.5.1",
     "compute-sum": "^1.0.0",
     "csv": "^0.4.1",

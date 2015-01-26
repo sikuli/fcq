@@ -19,18 +19,23 @@ function query(db) {
     //collection name
     var collection = db.collection('fcq');
     //actual query
-    collection.count
-
-    //write to file 
-    (function(err, results) {
+    collection.aggregate(
+    [
+        { $project: {insname1 : 1, N_ENROLL: 1, YearTerm: 1}},
+        { $sort: {insname1: 1, YearTerm: -1}},
+        { $group: {_id: {insname1: "$insname1", YearTerm:"$YearTerm"},
+        N_TAUGHT: { $sum: "$N_ENROLL"}}}
+    ],
+    //write to file
+    function(err, results) {
+        console.log(results);
         if (err) debug(err);
         else{
-            fs.writeFile(outf, results, function(err) {
-                if (err){ debug(err);}
-                else {debug("File saved.");}
+            fs.writeFile(outf, JSON.stringify(results, null, 2), function(err) {
+                if (err) debug(err);
+                else debug("File saved.");
                 db.close(); 
             });
         }
     });
 }
-
